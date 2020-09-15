@@ -19,7 +19,16 @@ public class HelloServlet extends HttpServlet{
 		//http://localhost:8080/Carros/hello?nome=Marcus&sobrenome=Sampar
 		String nome = req.getParameter("nome");
 		String sobrenome = req.getParameter("sobrenome");		
-		resp.getWriter().print("Olá mundo "+nome+" "+sobrenome);
+		resp.getWriter().print("Olá mundo GET: "+nome+" "+sobrenome);
 		
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		//Pega os parâmetros do corpo da requisição
+		//http://localhost:8080/Carros
+		String nome = req.getParameter("nome");
+		String sobrenome = req.getParameter("sobrenome");		
+		resp.getWriter().print("Olá mundo POST: "+nome+" "+sobrenome);
 	}
 }
