@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.livro.domain.Carro;
 import br.com.livro.domain.CarroService;
+import br.com.livro.domain.ListaCarros;
+import br.com.livro.util.JAXBUtil;
+import br.com.livro.util.ServletUtil;
 
 @WebServlet("/carros/*")
 public class CarrosServlet extends HttpServlet{
@@ -22,7 +25,13 @@ public class CarrosServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		List<Carro> carros = carroService.getCarros();
-		String carrosString = carros.toString();
-		resp.getWriter().write(carrosString);	
+		ListaCarros lista = new ListaCarros();
+		lista.setCarros(carros);
+		
+		//Gera o XML
+		String xml = JAXBUtil.toXML(lista);
+		
+		//Escreve o XML na response do servlet
+		ServletUtil.writeXML(resp, xml);	
 	}	
 }
